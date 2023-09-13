@@ -1,11 +1,9 @@
+import { getCategories } from "@/services";
 import Link from "next/link";
 
-const categories = [
-  { name: "React", slug: "react" },
-  { name: "Vue.js", slug: "vue" },
-];
+const Header = async () => {
+  const categories = await getCategories();
 
-const Header = () => {
   return (
     <div className="container mx-auto px-10 mb-8">
       <div className="border-b w-full inline-block border-blue-400 py-8">
