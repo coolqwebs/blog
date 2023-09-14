@@ -16,6 +16,7 @@ export const getPosts = async () => {
                 url
               }
             }
+            id
             slug
             title
             createdAt
@@ -42,6 +43,7 @@ export const getRecentPosts = async () => {
   const query = gql`
     query getRecentPosts() {
       posts(orderBy: createdAt_ASC, last: 3) {
+        id
         title
         image {
           url
@@ -55,7 +57,7 @@ export const getRecentPosts = async () => {
 
   return result.posts;
 };
-export const getSimilarPosts = async () => {
+export const getSimilarPosts = async (categories, slug) => {
   const query = gql`
     query getSimilarPosts($slug: String!, $categories: [String!]) {
       posts(
@@ -66,6 +68,7 @@ export const getSimilarPosts = async () => {
         last: 3
       ) {
         title
+        id
         image {
           url
         }
@@ -74,7 +77,7 @@ export const getSimilarPosts = async () => {
       }
     }
   `;
-  const result = await request(graphqlAPI, query);
+  const result = await request(graphqlAPI, query, { categories, slug });
 
   return result.posts;
 };
@@ -83,6 +86,7 @@ export const getCategories = async () => {
   const query = gql`
     query GetGategories {
       categories {
+        id
         name
         slug
       }
@@ -92,4 +96,40 @@ export const getCategories = async () => {
   const result = await request(graphqlAPI, query);
 
   return result.categories;
+};
+
+export const getPostDetails = async (id) => {
+  const query = gql`
+    query GetPostDetails($id: ID!) {
+      post(where: { id: $id }) {
+        id
+        title
+        excerpt
+        image {
+          url
+        }
+        author {
+          name
+          bio
+          photo {
+            url
+          }
+        }
+        createdAt
+        slug
+        content {
+          raw
+        }
+        categories {
+          id
+          name
+          slug
+        }
+      }
+    }
+  `;
+
+  const result = await request(graphqlAPI, query, { id });
+
+  return result.post;
 };

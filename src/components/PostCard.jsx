@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const PostCard = ({ post }) => {
   return (
-    <div className="bg-white shadow-lg  rounded-lg p-0 lg:p-8 pb-12 mb-8">
+    <div className="bg-white shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8">
       <div className="relative overflow-hidden shadow-md pb-80 mb-6">
         <Image
           unoptimized
@@ -15,7 +15,7 @@ const PostCard = ({ post }) => {
         />
       </div>
       <h1 className="transition duration-700 text-center mb-8 cursor-pointer hover:text-pink-600 text-3xl font-semibold">
-        <Link href={`/post/${post.slug}`}>{post.title}</Link>
+        <Link href={`/post/${post.id}`}>{post.title}</Link>
       </h1>
       <div className="block lg:flex text-center items-center justify-center mb-8 w-full">
         <div className="flex items-center justify-center mb-4 lg:mb-0 w-full lg:w-auto mr-8">
@@ -55,7 +55,7 @@ const PostCard = ({ post }) => {
         {post.excerpt}
       </p>
       <div className="text-center">
-        <Link href={`/post/${post.slug}`}>
+        <Link href={`/post/${post.id}`}>
           <span className="transition duration-500 transform hover:-translate-y-1 inline-block bg-pink-600 text-lg font-meduim rounded-full text-white px-8 py-3 cursor-pointer">
             Continue Reading
           </span>

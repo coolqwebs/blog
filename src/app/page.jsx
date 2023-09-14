@@ -6,6 +6,7 @@ import Head from "next/head";
 
 export default async function Home() {
   const posts = await getPosts();
+
   return (
     <div className="container mx-auto px-10 mb-8">
       <Head>
@@ -13,8 +14,8 @@ export default async function Home() {
       </Head>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="lg:col-span-8 col-span-1">
-          {posts.map((post, index) => (
-            <PostCard post={post.node} key={index} />
+          {posts.map((post) => (
+            <PostCard post={post.node} key={post.node.id} />
           ))}
         </div>
         <div className="lg:col-span-4 col-span-1">

@@ -7,13 +7,14 @@ const PostWidget = async ({ categories, slug }) => {
   const postsList = slug
     ? await getSimilarPosts(categories, slug)
     : await getRecentPosts();
+
   return (
     <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
       <h3 className="text-xl mb-8 font-semibold border-b pb-4">
         {slug ? "Related Posts" : "Recents Posts"}
       </h3>
-      {postsList.map((post) => (
-        <div className="flex items-center w-full mb-4" key={post.title}>
+      {postsList?.map((post) => (
+        <div className="flex items-center w-full mb-4" key={post.id}>
           <div className="w-16 flex-none">
             <Image
               alt={post.title}
@@ -27,11 +28,7 @@ const PostWidget = async ({ categories, slug }) => {
             <p className="text-gray-500 font-xs">
               {moment(post.createdAt).format("MMM DD, YYYY")}
             </p>
-            <Link
-              href={`/post/${post.slug}`}
-              key={post.title}
-              className="text-md"
-            >
+            <Link href={`/post/${post.id}`} className="text-md">
               {post.title}
             </Link>
           </div>
@@ -40,4 +37,5 @@ const PostWidget = async ({ categories, slug }) => {
     </div>
   );
 };
+
 export default PostWidget;
