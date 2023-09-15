@@ -41,7 +41,7 @@ export const getPosts = async () => {
 
 export const getRecentPosts = async () => {
   const query = gql`
-    query getRecentPosts() {
+    query GetRecentPosts() {
       posts(orderBy: createdAt_ASC, last: 3) {
         id
         title
@@ -59,7 +59,7 @@ export const getRecentPosts = async () => {
 };
 export const getSimilarPosts = async (categories, slug) => {
   const query = gql`
-    query getSimilarPosts($slug: String!, $categories: [String!]) {
+    query GetSimilarPosts($slug: String!, $categories: [String!]) {
       posts(
         where: {
           slug_not: $slug
@@ -132,4 +132,95 @@ export const getPostDetails = async (id) => {
   const result = await request(graphqlAPI, query, { id });
 
   return result.post;
+};
+
+export const submitComment = async (obj) => {
+  const result = await fetch("/api/comments", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(obj),
+  });
+
+  return result.json();
+};
+
+export const getComments = async (slug) => {
+  const query = gql`
+    query GetComments($slug: String!) {
+      comments(where: { post: { slug: $slug } }) {
+        id
+        name
+        createdAt
+        comment
+      }
+    }
+  `;
+
+  const result = await request(graphqlAPI, query, { slug });
+
+  return result.comments;
+};
+
+export const getFeaturedPosts = async () => {
+  const query = gql`
+    query GetFeaturedPosts() {
+      posts(where: {featuredPost: true}) {
+        author {
+          name
+          photo {
+            url
+          }
+        }
+        image {
+          url
+        }
+        title
+        slug
+        createdAt
+      }
+    }   
+  `;
+
+  const result = await request(graphqlAPI, query);
+
+  return result.posts;
+};
+
+export const getCategoryPost = async (slug) => {
+  const query = gql`
+    query GetCategoryPost($slug: String!) {
+      postsConnection(where: { categories_some: { slug: $slug } }) {
+        edges {
+          cursor
+          node {
+            author {
+              bio
+              name
+              id
+              photo {
+                url
+              }
+            }
+            createdAt
+            slug
+            title
+            excerpt
+            featuredImage {
+              url
+            }
+            categories {
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const result = await request(graphqlAPI, query, { slug });
+
+  return result.postsConnection.edges;
 };
