@@ -107,6 +107,8 @@ export const getPostDetails = async (id) => {
         excerpt
         image {
           url
+          width
+          height
         }
         author {
           name
@@ -153,7 +155,7 @@ export const getComments = async (slug) => {
         id
         name
         createdAt
-        comment
+        content
       }
     }
   `;
@@ -179,6 +181,7 @@ export const getFeaturedPosts = async () => {
         title
         slug
         createdAt
+        id
       }
     }   
   `;
@@ -207,7 +210,7 @@ export const getCategoryPost = async (slug) => {
             slug
             title
             excerpt
-            featuredImage {
+            image {
               url
             }
             categories {

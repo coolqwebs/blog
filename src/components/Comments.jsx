@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
 import { getComments } from "@/services";
 import moment from "moment";
 import parse from "html-react-parser";
 
-const Comments = ({ slug }) => {
-  // const comments = await getComments(slug);
+const Comments = async ({ slug }) => {
+  const comments = await getComments(slug);
 
-  const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    getComments().then((res) => {
-      setComments(res);
-    });
-  }, []);
   return (
     <>
-      {comments.length && (
+      {comments.length > 0 && (
         <div className="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
           <h3 className="text-xl mb-8 font-semibold border-b pb-4">
             {comments.length} {comments.length > 1 ? "Comments" : "Comment"}
@@ -30,7 +22,7 @@ const Comments = ({ slug }) => {
                 {moment(comment.createdAt).format("MMM DD, YYYY")}
               </p>
               <div className="whitespace-pre-line text-gry-600 w-full">
-                {parse(comment.comment)}
+                {parse(comment.content)}
               </div>
             </div>
           ))}

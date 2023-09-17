@@ -64,6 +64,8 @@ const PostDetail = ({ post }) => {
         <Image
           src={post.image.url}
           alt={post.title}
+          width={post.image.width}
+          height={post.image.height}
           className="object-top h-full w-full object-cover shadow-lg rounded-t-lg lg:rounded-lg"
         />
       </div>

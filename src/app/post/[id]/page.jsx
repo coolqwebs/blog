@@ -5,12 +5,9 @@ import CommentsForm from "@/components/CommentsForm";
 import PostDetail from "@/components/PostDetail";
 import PostWidget from "@/components/PostWidget";
 import { getPostDetails } from "@/services";
-import { useRouter } from "next/router";
 
-const Post = async () => {
-  const router = useRouter();
-
-  const post = await getPostDetails(router.query.id);
+const Post = async ({ params }) => {
+  const post = await getPostDetails(params.id);
 
   return (
     <div className="container mx-auto px-10 mb-8">

@@ -2,12 +2,8 @@ import { getRecentPosts, getSimilarPosts } from "@/services";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-import Loader from "./Loader";
-import { useRouter } from "next/router";
 
 const PostWidget = async ({ categories, slug }) => {
-  const router = useRouter();
-
   const postsList = slug
     ? await getSimilarPosts(categories, slug)
     : await getRecentPosts();
@@ -26,10 +22,6 @@ const PostWidget = async ({ categories, slug }) => {
   //   }
   //   // eslint-disable-next-line
   // }, []);
-
-  if (router.isFallback) {
-    return <Loader />;
-  }
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-8 mb-8">

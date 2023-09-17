@@ -1,16 +1,9 @@
-import { useRouter } from "next/router";
-
 import { getCategoryPost } from "@/services";
-import { PostCard, Categories, Loader } from "@/components";
+import PostCard from "@/components/PostCard";
+import Categories from "@/components/Categories";
 
-const CategoryPost = async () => {
-  const router = useRouter();
-
-  const posts = await getCategoryPost(router.query.slug);
-
-  if (router.isFallback) {
-    return <Loader />;
-  }
+const CategoryPost = async ({ params }) => {
+  const posts = await getCategoryPost(params.slug);
 
   return (
     <div className="container mx-auto px-10 mb-8">

@@ -3,7 +3,7 @@ import { GraphQLClient, gql } from "graphql-request";
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPH_API;
 const authToken = process.env.GRAPHCMS_AUTH_TOKEN;
 
-export const comments = async (req, res) => {
+export const POST = async (req, res) => {
   const graphQLClient = new GraphQLClient(graphqlAPI, {
     headers: {
       authorization: `Bearer ${authToken}`,
