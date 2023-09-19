@@ -2,6 +2,16 @@
   "name": "blog",
   "version": "0.1.0",
   "private": true,
+  "description": "Blog application using GraphCMS",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coolqwebs/blog.git"
+  },
+  "engines": {
+    "npm": ">=8",
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
