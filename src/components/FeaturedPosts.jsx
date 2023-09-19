@@ -5,6 +5,7 @@ import "react-multi-carousel/lib/styles.css";
 
 import FeaturedPostCard from "./FeaturedPostCard";
 import { getFeaturedPosts } from "@/services";
+import Loader from "./Loader";
 
 const responsive = {
   superLargeDesktop: {
@@ -31,17 +32,16 @@ const FeaturedPosts = () => {
 
   useEffect(() => {
     getFeaturedPosts().then((result) => {
-      console.log(result);
       setPosts(result);
       setDataLoaded(true);
     });
   }, []);
 
   const customLeftArrow = (
-    <div className="absolute arrow-btn left-0 text-center py-3 cursor-pointer bg-pink-600 rounded-full">
+    <div className="absolute arrow-btn left-0 text-center py-3 cursor-pointer bg-pink-600 rounded-full opacity-40 hover:opacity-100">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6 text-white"
+        className="h-6 w-6 text-white mx-auto"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -57,10 +57,10 @@ const FeaturedPosts = () => {
   );
 
   const customRightArrow = (
-    <div className="absolute arrow-btn right-0 text-center py-3 cursor-pointer bg-pink-600 rounded-full">
+    <div className="absolute arrow-btn right-0 text-center py-3 cursor-pointer bg-pink-600 rounded-full opacity-40 hover:opacity-100">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6 text-white"
+        className="h-6 w-6 text-white mx-auto"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -77,16 +77,23 @@ const FeaturedPosts = () => {
 
   return (
     <div className="mb-8">
-      <Carousel
-        infinite
-        customLeftArrow={customLeftArrow}
-        customRightArrow={customRightArrow}
-        responsive={responsive}
-        itemClass="px-4"
-      >
-        {dataLoaded &&
-          posts.map((post) => <FeaturedPostCard key={post.id} post={post} />)}
-      </Carousel>
+      {dataLoaded ? (
+        <Carousel
+          infinite
+          customLeftArrow={customLeftArrow}
+          customRightArrow={customRightArrow}
+          responsive={responsive}
+          itemClass="px-4"
+        >
+          {posts.map((post) => (
+            <FeaturedPostCard key={post.id} post={post} />
+          ))}
+        </Carousel>
+      ) : (
+        <div className="h-72 flex items-center justify-center">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };
