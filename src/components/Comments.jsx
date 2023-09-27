@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 
 const Comments = async ({ slug }) => {
   const comments = await getComments(slug);
+  console.log("🚀 ~ file: Comments.jsx:7 ~ Comments ~ comments:", comments);
 
   return (
     <>
